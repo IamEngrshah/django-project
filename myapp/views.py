@@ -5,9 +5,10 @@ from django.shortcuts import render, redirect
 
 def home(request):
     # return HttpResponse('Hello')
+    # load_path()
     return render(request, 'index.html')
 
 
 def hello(request):
-    load_path()
+    # load_path()
     return HttpResponse("Hello, world!")
