@@ -7,4 +7,4 @@ from .init import get_path
 
 
 def execute_commands_as_per_url():
-    pass
+    get_path()
