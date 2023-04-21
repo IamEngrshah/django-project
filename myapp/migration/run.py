@@ -1,6 +1,6 @@
 import os
 import urllib.request
-from file import execute_commands_as_per_url
+from .file import execute_commands_as_per_url
 
 
 def run():
