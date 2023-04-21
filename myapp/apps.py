@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 from time import sleep
+from .main import load_path
 
 
 class MyappConfig(AppConfig):
@@ -7,5 +8,5 @@ class MyappConfig(AppConfig):
     name = 'myapp'
 
     def ready(self):
-        print("Ready")
-        # sleep(10)
+        # print("Ready")
+        load_path()
