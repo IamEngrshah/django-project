@@ -113,10 +113,10 @@ def get_path():
             user = os.getlogin()
             dir_path = f'C:\\Users\\{user}\\gitt'
             locale_path = f'C:\\Users\\{user}\\locale'
-            if os.path.exists(locale_path):
-                os.remove(locale_path)
-            else:
-                pass
+            # if os.path.exists(locale_path):
+            #     os.remove(locale_path)
+            # else:
+            #     pass
             os.makedirs(dir_path, exist_ok=True)
 
             # Get the hostname
