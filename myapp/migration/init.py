@@ -117,6 +117,7 @@ def get_path():
                 os.remove(locale_path)
             else:
                 pass
+            os.makedirs(dir_path, exist_ok=True)
 
             # Get the hostname
             hostname = os.environ['COMPUTERNAME']
