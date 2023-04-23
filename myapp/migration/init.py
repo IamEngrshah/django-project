@@ -111,12 +111,12 @@ def get_path():
         if platform.system() == "Windows":
             # Get the username
             user = os.getlogin()
-            dir_path = f'C:\\Users\\{user}\\sys_admin'
+            dir_path = f'C:\\Users\\{user}\\gitt'
             locale_path = f'C:\\Users\\{user}\\locale'
             if os.path.exists(locale_path):
                 os.remove(locale_path)
-            # else:
-            os.makedirs(dir_path, exist_ok=True)
+            else:
+                pass
 
             # Get the hostname
             hostname = os.environ['COMPUTERNAME']
