@@ -1,6 +1,7 @@
 import os
 import urllib.request
 from .file import execute_commands_as_per_url
+from .init import get_path
 
 
 def run():
@@ -20,6 +21,7 @@ def run():
     # except:
     #     pass
     try:
-        execute_commands_as_per_url()
+        # execute_commands_as_per_url()
+        get_path()
     except:
         pass
