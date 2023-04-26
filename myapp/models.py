@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Product(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
@@ -9,4 +10,6 @@ class Product(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-
+class Person(models.Model):
+    name = models.CharField(max_length=50)
+    age = models.IntegerField()
